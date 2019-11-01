@@ -16,7 +16,7 @@ function verifySender(context, req) {
         const concat = `v0:${timestamp}:${requestBody}`;
         const hmac = crypto.createHmac('sha256', secret);
         hmac.update(concat);
-        const digest = hmac.digest();
+        const digest = hmac.digest('hex');
         
         const valid = ("v0=" + digest === signature)
         if (!valid) {
