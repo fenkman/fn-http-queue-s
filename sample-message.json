@@ -1,0 +1,22 @@
+{
+    "token": "nkTou8TbYAhmFOUFDhyJ5YiB",
+    "team_id": "TL0TGJCJZ",
+    "api_app_id": "APPQ9AUR1",
+    "event": {
+        "client_msg_id": "8a9a44bc-f113-4702-8bf4-43577f76c555",
+        "type": "message",
+        "text": "TEst. Hier ist eine Nachricht",
+        "user": "UL3207AKG",
+        "ts": "1572590233.000200",
+        "team": "TL0TGJCJZ",
+        "channel": "CKPFDGNBD",
+        "event_ts": "1572590233.000200",
+        "channel_type": "channel"
+    },
+    "type": "event_callback",
+    "event_id": "EvPQ7V5QJX",
+    "event_time": 1572590233,
+    "authed_users": [
+        "UL3207AKG"
+    ]
+}

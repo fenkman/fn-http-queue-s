@@ -1,20 +1,49 @@
+const crypto = require('crypto');
+
 function verifyMessage(model) {
     return process.env["slack_channel_id"] && model.event && model.event.channel === process.env["slack_channel_id"];
+}
+
+function verifySender(req) {
+    const secret = process.env["slack_signing_secret"];
+    const signature = req.headers["X-Slack-Signature"];
+    const timestamp = req.headers["X-Slack-Request-Timestamp"];
+    if (secret && signature && timestamp) {
+        
+        const requestBody = req.rawBody;
+        const concat = `v0:${timestamp}:${requestBody}`;
+        const hmac = crypto.createHmac('sha256', secret);
+        hmac.update(concat);
+        return hmac.digest() === signature;
+    }
+    return false;
 }
 
 module.exports = function (context, req) {
 
     let model = (typeof req.body != 'undefined' && typeof req.body == 'object') ? req.body : null;
-    let error = !model ? "no data; or invalid payload in body" : null;
-    let challenge = model ? model.challenge : null;
+
+    let error;
+    let challenge;
+
+    if (!model) {
+        error = "no data; or invalid payload in body";
+    }
+
+    if (!verifySender(req)) {
+        error = "unauthorized access. failed to verify sender signature."
+    } else {
+        challenge = model ? model.challenge : null;
+    }
 
     context.res = {
         status: error ? 500 : 200,
         body: error ? error : challenge
     };
 
-    if (verifyMessage(model)) {
+    if (!error && verifyMessage(model)) {
         context.bindings.out = model;
     }
+
     context.done(error);
 };
