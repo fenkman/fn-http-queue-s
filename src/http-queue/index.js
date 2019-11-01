@@ -20,7 +20,7 @@ function verifySender(context, req) {
         
         const valid = ("v0=" + digest === signature)
         if (!valid) {
-            context.error("computed digest %s != signature %s. Digested value was %s", digest, signature, concat);
+            context.log.error("computed digest %s != signature %s. Digested value was %s", digest, signature, concat);
         }
         return valid;
     }
