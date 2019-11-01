@@ -4,7 +4,7 @@ function verifyMessage(model) {
     return process.env["slack_channel_id"] && model.event && model.event.channel === process.env["slack_channel_id"];
 }
 
-function verifySender(req) {
+function verifySender(context, req) {
     const secret = process.env["slack_signing_secret"];
     const signature = req.headers["X-Slack-Signature"];
     const timestamp = req.headers["X-Slack-Request-Timestamp"];
@@ -36,7 +36,7 @@ module.exports = function (context, req) {
         error = "no data; or invalid payload in body";
     }
 
-    if (!verifySender(req)) {
+    if (!verifySender(context, req)) {
         error = "unauthorized access. failed to verify sender signature."
     } else {
         challenge = model ? model.challenge : null;
