@@ -18,10 +18,11 @@ function verifySender(context, req) {
         hmac.update(concat);
         const digest = hmac.digest();
         
-        if (!digest === signature) {
+        const valid = ("v0=" + digest === signature)
+        if (!valid) {
             context.error("computed digest %s != signature %s. Digested value was %s", digest, signature, concat);
         }
-        return digest === signature;
+        return valid;
     }
     return false;
 }
