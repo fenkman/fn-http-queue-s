@@ -9,6 +9,7 @@ function verifySender(context, req) {
     const signature = req.headers["X-Slack-Signature"];
     const timestamp = req.headers["X-Slack-Request-Timestamp"];
     context.log("secret: %s, signature: %s, timestamp: %s", secret, signature, timestamp);
+    context.log('Request Headers = ' + JSON.stringify(req.headers));
     if (secret && signature && timestamp) {
 
         const requestBody = req.rawBody;
