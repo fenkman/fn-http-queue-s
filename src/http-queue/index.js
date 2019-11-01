@@ -1,3 +1,7 @@
+function verifyMessage(model) {
+    return process.env["slack_channel_id"] && model.event && model.event.channel === process.env["slack_channel_id"];
+}
+
 module.exports = function (context, req) {
 
     let model = (typeof req.body != 'undefined' && typeof req.body == 'object') ? req.body : null;
@@ -9,6 +13,8 @@ module.exports = function (context, req) {
         body: error ? error : challenge
     };
 
-    context.bindings.out = model;
+    if (verifyMessage(model)) {
+        context.bindings.out = model;
+    }
     context.done(error);
 };
