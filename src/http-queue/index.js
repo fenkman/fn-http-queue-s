@@ -8,7 +8,7 @@ function verifySender(req) {
     const secret = process.env["slack_signing_secret"];
     const signature = req.headers["X-Slack-Signature"];
     const timestamp = req.headers["X-Slack-Request-Timestamp"];
-    console.log("secret: %s, signature: %s, timestamp: %s", secret, signature, timestamp);
+    context.log("secret: %s, signature: %s, timestamp: %s", secret, signature, timestamp);
     if (secret && signature && timestamp) {
 
         const requestBody = req.rawBody;
@@ -18,7 +18,7 @@ function verifySender(req) {
         const digest = hmac.digest();
         
         if (!digest === signature) {
-            console.error("computed digest %s != signature %s. Digested value was %s", digest, signature, concat);
+            context.error("computed digest %s != signature %s. Digested value was %s", digest, signature, concat);
         }
         return digest === signature;
     }
