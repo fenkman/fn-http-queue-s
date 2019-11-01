@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 
 function verifyMessage(model) {
-    return process.env["slack_channel_id"] && model.event && model.event.channel === process.env["slack_channel_id"];
+    return !process.env["slack_channel_id"] || process.env["slack_channel_id"] && model.event && model.event.channel === process.env["slack_channel_id"];
 }
 
 function verifySender(context, req) {
