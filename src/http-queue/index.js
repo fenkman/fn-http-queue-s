@@ -41,7 +41,7 @@ module.exports = function (context, req) {
     if (!verifySender(context, req)) {
         error = "unauthorized access. failed to verify sender signature."
     } else {
-        challenge = model ? model.challenge : null;
+        challenge = model && model.type && model.type === "url_verification" ? model.challenge : null;
     }
 
     context.res = {
