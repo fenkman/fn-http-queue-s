@@ -19,7 +19,7 @@
     "variables": {
         "storageName": "[concat('function', uniqueString(parameters('siteName')))]",
         "contentShareName": "[toLower(parameters('siteName'))]",
-        "repoUrl": "https://github.com/jefking/fn-http-queue-s",
+        "repoUrl": "https://github.com/fenkman/fn-http-queue-s",
         "branch": "master"
     },
     "resources": [
