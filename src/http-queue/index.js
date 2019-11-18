@@ -46,7 +46,7 @@ module.exports = function (context, req) {
 
     context.res = {
         status: error ? 500 : 200,
-        body: error ? error : challenge
+        body: error ? error : challenge || { "status": "ok" }
     };
 
     if (!error && verifyMessage(model)) {
